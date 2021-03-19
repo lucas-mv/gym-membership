@@ -1,8 +1,9 @@
+import { Button } from 'antd'
 import './Dashboard.css'
 
 const Dashboard: React.FC = () => {
     return (
-        <div>oi eu sou um dash</div>
+        <Button>button</Button>
     )
 }
 
