@@ -1,5 +1,6 @@
 import { Tag, Space, List, Skeleton, Avatar } from "antd";
 import React, { useEffect, useState } from "react";
+import useGlobal from "../../GlobalState";
 import "./Members.css";
 
 interface MemberView {
@@ -14,8 +15,8 @@ interface MemberView {
 const Members: React.FC = () => {
   const [members, setMembers] = useState<MemberView[]>();
 
-  useEffect(() => {
-      setMembers([
+  useEffect(() => { 
+    setMembers([
         {
           name: "Adineia Barbosa",
           enterDate: new Date(),
@@ -32,6 +33,38 @@ const Members: React.FC = () => {
           phoneNumber: "993968572",
           planType: "3x livre",
         },
+        {
+          name: "Adineia Barbosa",
+          enterDate: new Date(),
+          paymentDay: 20,
+          paymentType: "Mensal",
+          phoneNumber: "993968572",
+          planType: "3x livre",
+        },
+        {
+          name: "Adineia Barbosa",
+          enterDate: new Date(),
+          paymentDay: 20,
+          paymentType: "Mensal",
+          phoneNumber: "993968572",
+          planType: "3x livre",
+        },
+        {
+          name: "Adineia Barbosa",
+          enterDate: new Date(),
+          paymentDay: 20,
+          paymentType: "Mensal",
+          phoneNumber: "993968572",
+          planType: "3x livre",
+        },
+        {
+          name: "Adineia Barbosa",
+          enterDate: new Date(),
+          paymentDay: 20,
+          paymentType: "Mensal",
+          phoneNumber: "993968572",
+          planType: "3x livre",
+        }
       ])
   },[])
 
@@ -40,7 +73,7 @@ const Members: React.FC = () => {
       itemLayout="horizontal"
       dataSource={members}
       renderItem={(item) => (
-        <List.Item>
+        <List.Item actions={[<a key="list-loadmore-edit">ver mais</a>]}>
           <List.Item.Meta
             title={<a href="https://ant.design">{item.name}</a>}
             description={`${item.enterDate.toLocaleDateString()} - ${

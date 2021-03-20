@@ -1,35 +1,44 @@
-import { Breadcrumb, Menu } from "antd";
+import { Alert, Breadcrumb, Menu, Spin } from "antd";
 import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
 import React from "react";
 import "./App.css";
+import useGlobal from "./GlobalState";
 import ZouRouter from "./ZouRouter";
 
 function App() {
+  const [globalState, _] = useGlobal();
+
   return (
     <div className="App">
-      <Layout className="layout max-height">
-        <Header className="header">
-          <div className="logo" />
+      <Layout>
+        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+          <img src="images/zou.svg"  className="logo"></img>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
             <Menu.Item key="1">nav 1</Menu.Item>
             <Menu.Item key="2">nav 2</Menu.Item>
             <Menu.Item key="3">nav 3</Menu.Item>
           </Menu>
         </Header>
-
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-
-        <Content style={{ padding: '0 50px' }}>
-          <div className="site-layout-content">
+        <Content
+          className="site-layout"
+          style={{ padding: "0 50px", marginTop: 64 }}
+        >
+          <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 380 }}
+          >
+            {globalState.loading && <Spin tip="Loading..."></Spin>}
             {ZouRouter()}
           </div>
         </Content>
-
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: "center" }}>
+          Ant Design ©2018 Created by Ant UED
+        </Footer>
       </Layout>
     </div>
   );
