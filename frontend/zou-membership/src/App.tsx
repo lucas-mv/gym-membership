@@ -1,47 +1,66 @@
-import { Alert, Breadcrumb, Menu, Spin } from "antd";
-import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
-import React from "react";
+import { Box, Button, Collapsible, Grommet, Heading, ResponsiveContext } from "grommet";
+import { Menu, Notification } from "grommet-icons";
+import React, { useState } from "react";
 import "./App.css";
 import useGlobal from "./GlobalState";
 import ZouRouter from "./ZouRouter";
+import './ZouI18n'
 
 function App() {
   const [globalState, _] = useGlobal();
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <div className="App">
-      <Layout>
-        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-          <img src="images/zou.svg"  className="logo"></img>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
-          </Menu>
-        </Header>
-        <Content
-          className="site-layout"
-          style={{ padding: "0 50px", marginTop: 64 }}
-        >
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, minHeight: 380 }}
-          >
-            {globalState.loading && <Spin tip="Loading..."></Spin>}
-            {ZouRouter()}
-          </div>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
-      </Layout>
-    </div>
+    <Grommet full>
+     <ResponsiveContext.Consumer>
+       {size => (
+          <Box fill>
+            <AppBar>
+              <img className="logo" src="images/zou.svg"></img>
+              <Heading level='3' margin='none'>ぞう</Heading>
+              <Button
+                icon={<Menu />}
+                onClick={() => setShowSidebar(!showSidebar)}
+              />
+            </AppBar>
+            <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+                <Box fill flex align='center' justify='center' className="page">
+                  {globalState.loading}
+                  {ZouRouter()}
+                </Box>
+
+                <Collapsible direction="horizontal" open={showSidebar}>
+                  <Box
+                    flex
+                    width='medium'
+                    background='light-2'
+                    elevation='small'
+                    align='center'
+                    justify='center'
+                  >
+                    sidebar
+                  </Box>
+                </Collapsible>
+            </Box>
+          </Box>
+       )}
+     </ResponsiveContext.Consumer>
+    </Grommet>
   );
 }
+
+const AppBar = (props: any) => (
+  <Box
+    tag="header"
+    direction="row"
+    align="center"
+    justify="between"
+    background="brand"
+    pad={{ left: "medium", right: "small", vertical: "small" }}
+    elevation="medium"
+    style={{ zIndex: "1" }}
+    {...props}
+  />
+);
 
 export default App;
